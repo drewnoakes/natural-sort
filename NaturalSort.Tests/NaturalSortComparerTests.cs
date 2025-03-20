@@ -6,43 +6,39 @@ namespace NaturalSort.Tests;
 
 public sealed class NaturalSortComparerTests
 {
-    [Fact]
-    public void OrdersCorrectly()
+    [Theory]
+    [InlineData("", "")]
+    [InlineData(null, null)]
+    [InlineData("Hello", "Hello")]
+    [InlineData("Hello123", "Hello123")]
+    [InlineData("123", "123")]
+    [InlineData("123Hello", "123Hello")]
+    public void CompareEqual(string? x, string? y)
     {
-        AssertEqual("", "");
-        AssertEqual(null, null);
-        AssertEqual("Hello", "Hello");
-        AssertEqual("Hello123", "Hello123");
-        AssertEqual("123", "123");
-        AssertEqual("123Hello", "123Hello");
+        Assert.Equal(0, NaturalSortComparer.Ordinal.Compare(x, y));
+        Assert.Equal(0, NaturalSortComparer.Ordinal.Compare(y, x));
+    }
 
-        AssertOrdered("", "Hello");
-        AssertOrdered(null, "Hello");
-        AssertOrdered("Hello", "Hello1");
-        AssertOrdered("Hello123", "Hello124");
-        AssertOrdered("Hello123", "Hello133");
-        AssertOrdered("Hello123", "Hello223");
-        AssertOrdered("123", "124");
-        AssertOrdered("123", "133");
-        AssertOrdered("123", "223");
-        AssertOrdered("123", "1234");
-        AssertOrdered("123", "2345");
-        AssertOrdered("0", "1");
-        AssertOrdered("123Hello", "124Hello");
-        AssertOrdered("123Hello", "133Hello");
-        AssertOrdered("123Hello", "223Hello");
-        AssertOrdered("123Hello", "1234Hello");
-
-        static void AssertEqual(string? x, string? y)
-        {
-            Assert.Equal(0, NaturalSortComparer.Ordinal.Compare(x, y));
-            Assert.Equal(0, NaturalSortComparer.Ordinal.Compare(y, x));
-        }
-
-        static void AssertOrdered(string? x, string? y)
-        {
-            Assert.Equal(-1, NaturalSortComparer.Ordinal.Compare(x, y));
-            Assert.Equal(1, NaturalSortComparer.Ordinal.Compare(y, x));
-        }
+    [Theory]
+    [InlineData("", "Hello")]
+    [InlineData(null, "Hello")]
+    [InlineData("Hello", "Hello1")]
+    [InlineData("Hello123", "Hello124")]
+    [InlineData("Hello123", "Hello133")]
+    [InlineData("Hello123", "Hello223")]
+    [InlineData("123", "124")]
+    [InlineData("123", "133")]
+    [InlineData("123", "223")]
+    [InlineData("123", "1234")]
+    [InlineData("123", "2345")]
+    [InlineData("0", "1")]
+    [InlineData("123Hello", "124Hello")]
+    [InlineData("123Hello", "133Hello")]
+    [InlineData("123Hello", "223Hello")]
+    [InlineData("123Hello", "1234Hello")]
+    public void CompareOrdered(string? x, string? y)
+    {
+        Assert.Equal(-1, NaturalSortComparer.Ordinal.Compare(x, y));
+        Assert.Equal(1, NaturalSortComparer.Ordinal.Compare(y, x));
     }
 }
