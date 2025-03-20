@@ -44,16 +44,20 @@ public sealed class NaturalSortComparer : IComparer<string?>
             var cy = y[iy];
 
             int result;
+
             if (char.IsDigit(cx) && char.IsDigit(cy))
+            {
                 result = CompareInteger(x, y, ref ix, ref iy);
+            }
             else
-                result = cx.CompareTo(y[iy]);
+            {
+                result = cx.CompareTo(cy);
+                ix++;
+                iy++;
+            }
 
             if (result != 0)
                 return result;
-
-            ix++;
-            iy++;
         }
 
         static int CompareInteger(string x, string y, ref int ix, ref int iy)

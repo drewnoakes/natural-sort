@@ -36,6 +36,7 @@ public sealed class NaturalSortComparerTests
     [InlineData("123Hello", "133Hello")]
     [InlineData("123Hello", "223Hello")]
     [InlineData("123Hello", "1234Hello")]
+    [InlineData("Hello123A", "Hello123B")]
     public void CompareOrdered(string? x, string? y)
     {
         Assert.Equal(-1, NaturalSortComparer.Ordinal.Compare(x, y));
